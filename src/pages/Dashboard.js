@@ -4,10 +4,18 @@ import loadingImage from "../images/preloader.gif";
 import { GithubContext } from "../context/context";
 import { useGlobalContext } from "../context/context";
 const Dashboard = () => {
-  const { githubUser, githubRepos, githubFollowers } = useGlobalContext();
-  console.log(githubUser);
-  console.log(githubRepos);
-  console.log(githubFollowers);
+  const { githubUser, githubRepos, githubFollowers, isLoading } =
+    useGlobalContext();
+
+  if (isLoading) {
+    return (
+      <main>
+        <Navbar></Navbar>
+        <Search></Search>
+        <img src={loadingImage} className="loading-img" />
+      </main>
+    );
+  }
   return (
     <main>
       <Navbar></Navbar>

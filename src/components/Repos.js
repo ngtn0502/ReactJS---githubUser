@@ -20,6 +20,7 @@ const Repos = () => {
     }
     return acc;
   }, {});
+  // For pie3d chart
 
   const mostPopular = Object.values(acc)
     .sort((a, b) => {
@@ -27,6 +28,7 @@ const Repos = () => {
     })
     .slice(0, 5);
 
+  // For doughnut3d chart
   const mostStars = Object.values(acc)
     .sort((a, b) => {
       return b.stars - a.stars;
@@ -36,6 +38,27 @@ const Repos = () => {
       return { ...item, value: item.stars };
     });
 
+  // For bar and column chart
+
+  const data = githubRepos.reduce(
+    (total, item) => {
+      const { forks_count, stargazers_count, name } = item;
+      total.stars[stargazers_count] = { label: name, value: stargazers_count };
+      total.forks[forks_count] = { label: name, value: forks_count };
+      return total;
+    },
+    {
+      stars: {},
+      forks: {},
+    }
+  );
+
+  // For column3d chart
+  const stars = Object.values(data.stars).slice(-5).reverse();
+  // For bar3d chart
+  const forks = Object.values(data.forks).slice(-5).reverse();
+
+  // Random data first
   const chartData = [
     {
       label: "CSS",
@@ -56,9 +79,9 @@ const Repos = () => {
       <Wrapper className="section-center">
         {/* <ExampleChart data={chartData}></ExampleChart> */}
         <Pie3D data={mostPopular}></Pie3D>
-        <div></div>
+        <Column3D data={stars}></Column3D>
         <Doughnut2D data={mostStars}></Doughnut2D>
-        <div></div>
+        <Bar3D data={forks}></Bar3D>
       </Wrapper>
     </div>
   );

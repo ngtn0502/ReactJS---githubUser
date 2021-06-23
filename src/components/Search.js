@@ -1,9 +1,43 @@
-import React, { useContext } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import styled from "styled-components";
 import { MdSearch } from "react-icons/md";
-import { GithubContext } from "../context/context";
+import { GithubContext, useGlobalContext } from "../context/context";
 const Search = () => {
-  return <h2>search component</h2>;
+  const { submitFormHandler, rateLimit, error, isLoading } =
+    useGlobalContext("");
+  const [input, setInput] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (input) {
+      submitFormHandler(input);
+    }
+  };
+  return (
+    <Fragment>
+      <section className="section">
+        <Wrapper className="section-center">
+          {error.show && (
+            <ErrorWrapper>
+              <p>There are some error</p>
+            </ErrorWrapper>
+          )}
+          <form className="form-control" onSubmit={submitHandler}>
+            <MdSearch></MdSearch>
+            <input
+              type="text"
+              id="input"
+              placeholder="Github name"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+            {!error.show && !isLoading && <button type="submit">Search</button>}
+          </form>
+          <h3>request {rateLimit}/60</h3>
+        </Wrapper>
+      </section>
+    </Fragment>
+  );
 };
 
 const Wrapper = styled.div`

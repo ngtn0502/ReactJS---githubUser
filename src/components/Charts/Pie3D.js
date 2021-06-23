@@ -31,7 +31,7 @@ const renderChart = (props) => {
       // Chart Configuration
       chart: {
         caption: "Languages",
-        theme: "fusion",
+        theme: "gammel",
         decimals: 0,
         pieRadius: " 45%",
       },
