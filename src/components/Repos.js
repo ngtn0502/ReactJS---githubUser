@@ -4,18 +4,37 @@ import { GithubContext, useGlobalContext } from "../context/context";
 import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
 const Repos = () => {
   const { githubRepos } = useGlobalContext();
-  let init = { CSS: 0, JavaScript: 0, HTML: 0 };
-  const acc = githubRepos.reduce((acc, item) => {
-    if (acc[item.language] != null) {
-      return;
+  let acc = githubRepos.reduce((acc, item) => {
+    const { language, stargazers_count } = item;
+    if (language == null) {
+      return acc;
     }
-    if (acc[item.language]) {
-      acc[item.language] += 1;
+    if (!acc[language]) {
+      acc[language] = { label: language, value: 1, stars: stargazers_count };
     } else {
-      acc[item.language] = 1;
+      acc[language] = {
+        ...acc[language],
+        value: acc[language].value + 1,
+        stars: acc[language].stars + stargazers_count,
+      };
     }
     return acc;
-  }, init);
+  }, {});
+
+  const mostPopular = Object.values(acc)
+    .sort((a, b) => {
+      return b.value - a.value;
+    })
+    .slice(0, 5);
+
+  const mostStars = Object.values(acc)
+    .sort((a, b) => {
+      return b.stars - a.stars;
+    })
+    .slice(0, 5)
+    .map((item) => {
+      return { ...item, value: item.stars };
+    });
 
   const chartData = [
     {
@@ -36,7 +55,10 @@ const Repos = () => {
     <div className="section">
       <Wrapper className="section-center">
         {/* <ExampleChart data={chartData}></ExampleChart> */}
-        <Pie3D data={chartData}></Pie3D>
+        <Pie3D data={mostPopular}></Pie3D>
+        <div></div>
+        <Doughnut2D data={mostStars}></Doughnut2D>
+        <div></div>
       </Wrapper>
     </div>
   );
@@ -52,17 +74,16 @@ const Wrapper = styled.div`
 
   @media (min-width: 1200px) {
     grid-template-columns: 2fr 3fr;
-  }
-
-  div {
-    width: 100% !important;
-  }
-  .fusioncharts-container {
-    width: 100% !important;
-  }
-  svg {
-    width: 100% !important;
-    border-radius: var(--radius) !important;
+    div {
+      width: 100% !important;
+    }
+    .fusioncharts-container {
+      width: 100% !important;
+    }
+    svg {
+      width: 100% !important;
+      border-radius: var(--radius) !important;
+    }
   }
 `;
 
