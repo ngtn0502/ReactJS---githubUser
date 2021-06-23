@@ -1,19 +1,74 @@
-import React from 'react';
-import { GithubContext } from '../context/context';
-import styled from 'styled-components';
-import { GoRepo, GoGist } from 'react-icons/go';
-import { FiUsers, FiUserPlus } from 'react-icons/fi';
+import React from "react";
+import { GithubContext, useGlobalContext } from "../context/context";
+import styled from "styled-components";
+import { GoRepo, GoGist } from "react-icons/go";
+import { FiUsers, FiUserPlus } from "react-icons/fi";
+import { MdWrapText } from "react-icons/md";
 
 const UserInfo = () => {
-  return <h2>user info component</h2>;
+  const { githubUser, githubRepos, githubFollowers } = useGlobalContext();
+  const { following, public_repos, followers, public_gists } = githubUser;
+
+  const infoList = [
+    {
+      id: 1,
+      value: public_repos,
+      icon: <GoRepo className="icon"></GoRepo>,
+      label: "repos",
+      color: "pink",
+    },
+    {
+      id: 2,
+      value: followers,
+      icon: <FiUsers className="icon"></FiUsers>,
+      label: "followers",
+      color: "green",
+    },
+    {
+      id: 3,
+      value: following,
+      icon: <FiUserPlus className="icon"></FiUserPlus>,
+      label: "following",
+      color: "purple",
+    },
+    {
+      id: 4,
+      value: public_gists,
+      icon: <GoGist className="icon"></GoGist>,
+      label: "gists",
+      color: "yellow",
+    },
+  ];
+
+  return (
+    <section className="section">
+      <Wrapper className="section-center">
+        {infoList.map((item) => {
+          return <Item key={item.id} {...item}></Item>;
+        })}
+      </Wrapper>
+    </section>
+  );
+};
+
+const Item = ({ icon, value, label, color }) => {
+  return (
+    <article className="item">
+      <span className={color}>{icon}</span>
+      <div>
+        <h3>{value}</h3>
+        <p>{label}</p>
+      </div>
+    </article>
+  );
 };
 
 const Wrapper = styled.section`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem 2rem;
   @media (min-width: 640px) {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
   .item {
     border-radius: var(--radius);

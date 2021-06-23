@@ -4,8 +4,10 @@ import loadingImage from "../images/preloader.gif";
 import { GithubContext } from "../context/context";
 import { useGlobalContext } from "../context/context";
 const Dashboard = () => {
-  const { rootUrl } = useGlobalContext();
-  console.log(rootUrl);
+  const { githubUser, githubRepos, githubFollowers } = useGlobalContext();
+  console.log(githubUser);
+  console.log(githubRepos);
+  console.log(githubFollowers);
   return (
     <main>
       <Navbar></Navbar>
