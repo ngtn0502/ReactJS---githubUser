@@ -23,7 +23,24 @@ const GithubProvider = (props) => {
       const data = await response.json();
       if (data) {
         setGithubUser(data);
+
+        // await Promise.allSettled([
+        //   axios(`${rootUrl}/users/${input}/followers`),
+        //   axios(`${rootUrl}/users/${input}/repos?per_page=20`),
+        // ]).then((responses) => {
+        //   console.log(responses);
+        //   const fullFilled = "fulfilled";
+        //   const { followers, repos } = response;
+        //   if (followers.status === fullFilled) {
+        //     setGithubFollowers(followers.data);
+        //   }
+        //   if (repos.status === fullFilled) {
+        //     setGithubFollowers(repos.data);
+        //   }
+        // });
+        
         // Fetch follower
+
         const responseFollower = await fetch(
           `${rootUrl}/users/${input}/followers`
         );
