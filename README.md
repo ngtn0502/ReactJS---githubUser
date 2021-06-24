@@ -1,4 +1,17 @@
-## Gihthub API
+## About this project
+
+- This github user website allow people to search for a specific github user - find more infomation about that user by overview chart and more...
+
+
+## Tech Stack
+
+- ReactJS
+- React Router
+- JavaScript
+- HTML5
+- CSS3
+
+## Gihthub API when building this project
 
 - [Root Endpoint](https://api.github.com)
 - [Get User](https://api.github.com/users/freeCodeCamp)
