@@ -1,4 +1,4 @@
-## About this website
+## About this project
 
 - This github user website allow people to search for a specific github user - find more infomation about that user by overview chart and more...
 
