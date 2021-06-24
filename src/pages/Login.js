@@ -12,6 +12,8 @@ const Login = () => {
         <button className="btn" onClick={loginWithRedirect}>
           Login
         </button>
+
+        <p>sign up and login to find more... (it's totally safe )</p>
       </div>
     </Wrapper>
   );
@@ -30,6 +32,9 @@ const Wrapper = styled.section`
   }
   h1 {
     margin-bottom: 1.5rem;
+  }
+  p {
+    margin-top: 2rem;
   }
 `;
 export default Login;
