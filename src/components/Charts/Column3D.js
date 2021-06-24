@@ -31,6 +31,8 @@ const renderChart = (props) => {
       // Chart Configuration
       chart: {
         caption: "Most popular repos",
+        theme: "ocean",
+
         xAxisName: "Stars",
         yAxisName: "Repos",
         xAxisNameFontSize: "16px",
